@@ -222,7 +222,7 @@ export default {
     max-width: 100% !important;
     height: 100%;
     z-index: 1045;
-    transform: translateX(-100%);
+    transform: translateX(-101%);
     &-show {
       transform: translateX(0);
     }

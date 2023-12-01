@@ -1,15 +1,43 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="profit">
-    <Input :props-label="'Name'" :model-value="value" />
+    <div class="profit-inputs">
+      <div
+        class="profit-inputs-block"
+        v-for="(user, index) in inputCol"
+        :key="`user-${index}`"
+      >
+        <div class="card">
+          <div class="image">
+            <img src="@/assets/images/profit/img_card_photo.png" alt="" />
+          </div>
+          <span class="title">User{{ index + 1 }}</span>
+          <Input :props-label="t('pages.profit.cost')" v-model="user.value" />
+          <div class="price">
+            {{ t("pages.profit.profit") }}: {{ user?.result ?? "??" }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <Input :props-label="t('pages.profit.income')" v-model="income" />
+    <div class="profit-outputs">
+      <div class="profit-submit submit-btn" @click="addPerson">
+        {{ t("pages.profit.add") }}
+      </div>
+      <div class="profit-submit submit-btn" @click="deletePerson">
+        {{ t("pages.profit.delete") }}
+      </div>
+      <div class="profit-submit submit-btn" @click="count">
+        {{ t("button.count") }}
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import { onMounted, reactive, ref } from "vue";
-import { useI18n } from "@/hooks/use-i18n";
-import { useRouter } from "vue-router";
-import { usePopup } from "@/hooks/use-popup";
+import { ref } from "vue";
+import useI18n from "@/hooks/use-i18n";
 import { useAlert } from "@/hooks/use-alert";
+/** components */
 import Input from "@/widgets/input.vue";
 
 export default {
@@ -18,57 +46,61 @@ export default {
     Input,
   },
   setup() {
-    // import storage from "store2";
-    const value = ref("");
-    const popup = usePopup();
-    const { t, locale, setPrefix, change } = useI18n();
-    setPrefix({
-      $current: "pages.demo",
-    });
-    const router = useRouter();
+    const { t } = useI18n();
     const swal = useAlert();
-    const lang = reactive({
-      current: locale.value || "zh-tw",
-    });
-    const popupModal = async () => {
-      await popup.modal({
-        title: "popup",
-        text: "this a popup",
-        // props: {
-        //   title: t("pages.home.notify.vip.title"),
-        //   text: "VIP 1",
-        // },
-      });
+    const inputCol = ref([
+      { value: "", result: null },
+      { value: "", result: null },
+      // { value: "", result: null },
+      // { value: "", result: null },
+      // { value: "", result: null },
+      // { value: "", result: null },
+      // { value: "", result: null },
+      // { value: "", result: null },
+      // { value: "", result: null },
+    ]);
+    const income = ref("");
+    const addPerson = () => {
+      const format = { value: "", result: null };
+      inputCol.value.push(format);
     };
-    const toHome = () => {
-      router.push("/home");
+    const deletePerson = () => {
+      const deletedAry = inputCol.value.filter(
+        (itme, index, ary) => index !== ary.length - 1
+      );
+      inputCol.value = [...deletedAry];
     };
-    const swalModal = () => {
-      swal.alert({
-        title: t("$current.modal.swal.title"),
-        text: t("$current.modal.swal"),
-      });
+
+    const count = () => {
+      const data = [...inputCol.value];
+      const total = inputCol.value.reduce((accumulator, user) => {
+        const currentValue = +user.value;
+        return accumulator + currentValue;
+      }, 0);
+      console.log(total);
+      for (const user of data) {
+        const num = +user.value;
+        if (typeof num !== "number") {
+          swal.alert({
+            title: t("pages.profit.error.title"),
+            text: t("pages.profit.error.text"),
+          });
+          return;
+        }
+        // const persent = (user.value / total) * 100; // * 100是換成百分比 例如50%
+        const persent = user.value / total;
+        user.result = +income.value * persent;
+      }
+      // inputCol.value = data;
     };
-    const changeLang = () => {
-      const changed = lang.current === "zh-tw" ? "en" : "zh-tw";
-      lang.current = changed;
-      change(changed);
-      // lang.current = changed;
-      // storage.set("locale", changed);
-    };
-    onMounted(() => {});
     return {
       t,
-      lang,
-      value,
-      toHome,
-      swalModal,
-      changeLang,
-      popupModal,
+      count,
+      addPerson,
+      deletePerson,
+      income,
+      inputCol,
     };
   },
 };
 </script>
-<style lang="scss">
-@import "@/assets/scss/home.scss";
-</style>

@@ -1,12 +1,6 @@
 <template>
   <div class="wave-group">
-    <input
-      required=""
-      type="text"
-      class="input"
-      v-model="props.modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
-    />
+    <input required="" type="text" class="input" v-model="value" />
     <span class="bar"></span>
     <label class="label">
       <span
@@ -28,10 +22,18 @@ const props = defineProps({
   propsLabel: String,
   modelValue: String,
 });
-defineEmits(["update:update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 const label = computed(() => {
   const strings = props.propsLabel.split("");
   return strings;
+});
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit("update:modelValue", value);
+  },
 });
 console.log(label);
 </script>
@@ -46,7 +48,7 @@ console.log(label);
   font-size: 16px;
   padding: 10px 10px 10px 5px;
   display: block;
-  width: 200px;
+  width: 150px;
   border: none;
   border-bottom: 1px solid #515151;
   background: transparent;
@@ -82,7 +84,7 @@ console.log(label);
 .wave-group .bar {
   position: relative;
   display: block;
-  width: 200px;
+  width: 150px;
 }
 
 .wave-group .bar:before,

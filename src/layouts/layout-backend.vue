@@ -7,6 +7,8 @@
         collapsible
         :collapsed-width="78"
         v-model="isCollapsed"
+        class="layout-sidebar"
+        :class="{ 'layout-sidebar-show': showMobileSidebar }"
       >
         <Menu
           active-name="1-2"
@@ -14,7 +16,11 @@
           width="auto"
           :class="menuitemClasses"
         >
-          <MenuItem name="1-1" @click="changePath('/home')">
+          <MenuItem name="0-1" @click="SidebarToggle" class="back-icon">
+            <Icon type="ios-arrow-back" />
+            <span>{{ t("app.back") }}</span>
+          </MenuItem>
+          <MenuItem name="0-2" @click="changePath('/home')">
             <Icon type="ios-home" />
             <span>{{ t("sidebar.home") }}</span>
           </MenuItem>
@@ -54,14 +60,15 @@
           </Submenu>
         </Menu> -->
       </Sider>
-      <Layout>
+      <Layout class="layout-main">
         <Header :style="{ padding: 0 }" class="layout-header-bar">
           <Icon
-            @click="collapsedSider"
+            @click="SidebarToggle"
             :class="rotateIcon"
             :style="{ margin: '0 20px' }"
             type="md-menu"
             size="24"
+            class="header-icon"
           ></Icon>
         </Header>
         <Content
@@ -84,6 +91,7 @@ export default {
     const { t } = useI18n();
     const router = useRouter();
     const isCollapsed = ref(false);
+    const showMobileSidebar = ref(false);
     const rotateIcon = computed(() => [
       "menu-icon",
       isCollapsed.value ? "rotate-icon" : "",
@@ -115,6 +123,9 @@ export default {
       router.push(path);
     };
 
+    const SidebarToggle = () =>
+      (showMobileSidebar.value = !showMobileSidebar.value);
+
     // onMounted(() => {
     /** 後續自動新增sidebar */
     // const router = useRouter();
@@ -124,17 +135,19 @@ export default {
     // console.log(allRoutesPaths); // 打印所有页面的路径
     // });
     return {
-      t,
       sidebars,
       rotateIcon,
-      changePath,
       isCollapsed,
       menuitemClasses,
+      showMobileSidebar,
+      t,
+      changePath,
+      SidebarToggle,
     };
   },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .layout {
   border: 1px solid #d7dde4;
   background: #f5f7f9;
@@ -186,5 +199,33 @@ export default {
   transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
   vertical-align: middle;
   font-size: 22px;
+}
+
+.layout-header-bar {
+  display: none;
+}
+
+.back-icon {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  .layout-header-bar {
+    display: block;
+  }
+  .back-icon {
+    display: block;
+  }
+  .layout-sidebar {
+    position: fixed;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100%;
+    z-index: 1045;
+    transform: translateX(-100%);
+    &-show {
+      transform: translateX(0);
+    }
+  }
 }
 </style>

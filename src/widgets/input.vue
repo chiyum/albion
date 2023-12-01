@@ -35,7 +35,6 @@ const value = computed({
     emit("update:modelValue", value);
   },
 });
-console.log(label);
 </script>
 
 <style>

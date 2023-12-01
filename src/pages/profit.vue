@@ -73,11 +73,10 @@ export default {
 
     const count = () => {
       const data = [...inputCol.value];
-      const total = inputCol.value.reduce((accumulator, user) => {
+      const totalCost = inputCol.value.reduce((accumulator, user) => {
         const currentValue = +user.value;
         return accumulator + currentValue;
       }, 0);
-      console.log(total);
       for (const user of data) {
         const num = +user.value;
         if (typeof num !== "number") {
@@ -87,8 +86,8 @@ export default {
           });
           return;
         }
-        // const persent = (user.value / total) * 100; // * 100是換成百分比 例如50%
-        const persent = user.value / total;
+        // const persent = (user.value / totalCost) * 100; // * 100是換成百分比 例如50%
+        const persent = user.value / totalCost;
         user.result = +income.value * persent;
       }
       // inputCol.value = data;

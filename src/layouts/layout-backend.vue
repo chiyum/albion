@@ -112,7 +112,7 @@ export default {
           },
           {
             title: "sidebar.count.income",
-            path: "/income",
+            path: "/profit",
           },
         ],
       },

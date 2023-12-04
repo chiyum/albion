@@ -145,7 +145,9 @@
   display: flex;
   position: absolute;
   bottom: 3.5%;
+  left: 34%;
   width: 70%;
+  transform: translate(-50%, -50%);
   z-index: 5;
   &-link {
     display: flex;
@@ -289,7 +291,7 @@
   }
   100% {
     width: 95%;
-    min-width: 500px;
+    min-width: 480px;
   }
 }
 
@@ -367,7 +369,7 @@
     &-person {
       animation: person520Change var(--forward) forwards;
       left: 62%;
-      min-width: 500px
+      min-width: 480px
     }
     &-middle {
       background-size: 200%;
@@ -390,6 +392,7 @@
   }
   .home-nav {
     width: 100%;
+    left: 50%;
     &-link {
       padding-right: 16%;
     }

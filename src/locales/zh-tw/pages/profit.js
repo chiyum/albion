@@ -11,7 +11,7 @@ export default {
   materialQuantity: "主加工品數量",
   processedProductPrice: "次加工品價格",
   itemValue: "物品價值",
-  serviceCharge: "商家價格",
+  serviceCharge: "商家手續費",
   shippingCost: "旅行補正費用(運費)",
   sellingPrice: "販售價格",
   returnPersent: "返還%數",

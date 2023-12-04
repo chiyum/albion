@@ -1,4 +1,4 @@
-.profit {
+.cost {
   padding: 2rem;
   height: 100vh;
   // display: flex;
@@ -77,4 +77,16 @@
     display: grid;
     place-items: center;
   }
+}
+
+
+@media (max-width:520px) {
+  .cost {
+    padding: 1rem;
+    &-inputs {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+  }
+
 }

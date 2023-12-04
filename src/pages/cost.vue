@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="profit">
-    <div class="profit-inputs">
+  <div class="cost">
+    <div class="cost-inputs">
       <Input
         :props-label="t('pages.profit.materialPrice')"
         v-model="params.materialPrice"
@@ -35,8 +35,8 @@
         v-model="params.returnPersent"
       />
     </div>
-    <div class="profit-outputs">
-      <div class="profit-submit submit-btn" @click="onSubmit">
+    <div class="cost-outputs">
+      <div class="cost-submit submit-btn" @click="onSubmit">
         {{ t("button.count") }}
       </div>
       <div>{{ t("pages.profit.cost.cost") }}:{{ result.cost }}</div>

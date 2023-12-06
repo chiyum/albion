@@ -12,14 +12,22 @@
             <img src="@/assets/images/profit/img_card_photo.png" alt="" />
           </div>
           <span class="title">User{{ index + 1 }}</span>
-          <Input :props-label="t('pages.profit.cost')" v-model="user.value" />
+          <Input
+            :props-label="t('pages.profit.cost')"
+            :input-type="'number'"
+            v-model="user.value"
+          />
           <div class="price">
             {{ t("pages.profit.profit") }}: {{ user?.result ?? "??" }}
           </div>
         </div>
       </div>
     </div>
-    <Input :props-label="t('pages.profit.income')" v-model="income" />
+    <Input
+      :props-label="t('pages.profit.income')"
+      :input-type="'number'"
+      v-model="income"
+    />
     <div class="profit-outputs">
       <div class="profit-submit submit-btn" @click="addPerson">
         {{ t("pages.profit.add") }}

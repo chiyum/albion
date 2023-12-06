@@ -5,34 +5,42 @@
       <Input
         :props-label="t('pages.profit.materialPrice')"
         v-model="params.materialPrice"
+        :input-type="'number'"
       />
       <Input
         :props-label="t('pages.profit.materialQuantity')"
         v-model="params.materialQuantity"
+        :input-type="'number'"
       />
       <Input
         :props-label="t('pages.profit.processedProductPrice')"
         v-model="params.processedProductPrice"
+        :input-type="'number'"
       />
       <Input
         :props-label="t('pages.profit.itemValue')"
         v-model="params.itemValue"
+        :input-type="'number'"
       />
       <Input
         :props-label="t('pages.profit.serviceCharge')"
         v-model="params.serviceCharge"
+        :input-type="'number'"
       />
       <Input
         :props-label="t('pages.profit.shippingCost')"
         v-model="params.shippingCost"
+        :input-type="'number'"
       />
       <Input
         :props-label="t('pages.profit.sellingPrice')"
         v-model="params.sellingPrice"
+        :input-type="'number'"
       />
       <Input
         :props-label="t('pages.profit.returnPersent')"
         v-model="params.returnPersent"
+        :input-type="'number'"
       />
     </div>
     <div class="cost-outputs">

@@ -1,6 +1,12 @@
 <template>
   <div class="wave-group">
-    <input required="" type="text" class="input" v-model="value" />
+    <input
+      required=""
+      type="text"
+      class="input"
+      v-model="value"
+      @input="numberReplace"
+    />
     <span class="bar"></span>
     <label class="label">
       <span
@@ -20,7 +26,8 @@
 import { defineProps, computed } from "vue";
 const props = defineProps({
   propsLabel: String,
-  modelValue: String,
+  modelValue: String | Number,
+  inputType: { type: String, default: "text" },
 });
 const emit = defineEmits(["update:modelValue"]);
 const label = computed(() => {
@@ -32,9 +39,19 @@ const value = computed({
     return props.modelValue;
   },
   set(value) {
+    // const updateValue =
+    //   props.inputType === "text" ? value : numberReplace(value);
     emit("update:modelValue", value);
   },
 });
+
+const numberReplace = (el) => {
+  if (props.inputType !== "number") return;
+  /* 替换掉所有非数字字符 **/
+  const res = el.target.value.replace(/\D/g, "");
+  el.target.value = res;
+  // return `${res}`;
+};
 </script>
 
 <style>
